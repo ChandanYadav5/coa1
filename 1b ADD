@@ -1,0 +1,21 @@
+AREA ADD, CODE
+ENTRY
+EXPORT __main
+__main
+LDR R0, =2_11111111111111110000000000000000 ;lower half of 1st number
+LDR R1, =2_00000000000000001111111111111111 ;upper half of 1st number
+LDR R2, =2_00000000000000000000000000000000 ;lower half of 2nd number
+LDR R3, =2_11111111111111110000000000000000 ;upper half of 2nd number
+ADDS R4,R0,R2 ;add the lower half and store the sum in R4
+ADC R5,R1,R3 ; add the upper half with carry and store the result in R5
+NOP
+STOP
+END
+
+OUTPUT;
+R0:-0XFFFF0000
+R1:-0XOOOOFFFF
+R2:-0X00000000
+R3:-0XFFFF0000
+R4:-0XFFFF0000
+R5:-0XFFFFFFFF
