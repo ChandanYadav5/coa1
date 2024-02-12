@@ -1,0 +1,23 @@
+#include <LPC17xx.H>
+unsigned char data7[] = {0x88,0xeb,0x4c,0x49,0x2b,0x19,0x18,0xcb,0x8,0x9,0xa,0x38,0x9C,0x68,0x1c,0x1e};
+int main (void)
+{
+unsigned int i,j;
+unsigned int count=0;
+LPC_GPIO2->FIODIR = 0x000000FF; /* Seven seg on PORT2 are output */
+LPC_GPIO2->FIOPIN = 0x000000FF; /* Display blank */
+LPC_GPIO1->FIODIR = 0x3C000000; /*Dig control on PORT1 are output */
+LPC_GPIO1->FIOPIN = ~(0x3C000000); /* Display blank */
+while(1)
+{
+++count;
+if (count > 0xF) count = 0;
+for (i=0; i < 90000; i++) //change to inc/dec speed of count
+{
+LPC_GPIO2->FIOPIN = data7[count];
+LPC_GPIO1->FIOSET = 0x04000000; //digit1 enable
+for (j=0;j<500;j++); //change to inc/dec brightness of display
+LPC_GPIO1->FIOCLR =0x04000000; // digit1 enable
+}
+}
+}
