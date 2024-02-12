@@ -1,0 +1,16 @@
+AREA FACTORIAL, CODE
+ENTRY
+EXPORT __main
+__main
+MOV R1,#1 ; Initialize a register to store result
+MOV R2,#5 ; Factorial number
+L1 MUL R1,R2 ; Multiply R1*R2
+SUBS R2,#1 ; Decrement the number
+BNE L1 ; Branch to loop if not equal to zero
+NOP ; No operation
+STOP
+END
+
+output;
+R0=0X000101
+R1=0X000078
