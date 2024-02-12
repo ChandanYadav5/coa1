@@ -1,0 +1,19 @@
+AREA MULTIPLY, CODE
+ENTRY
+EXPORT __main
+__main
+MOV R0,#10 ; Set the counter =10
+MOV R1,#0 ; Initialize a register to store result
+MOV R2,#1 ; Take the first number to add
+L1 ADD R1,R1,R2 ; Add the numbers
+ADD R2,#1 ; Increment the integer
+SUBS R0,#1 ; Decrement counter
+BNE L1 ; Branch to loop if not equal to zero
+NOP
+STOP
+END
+
+output;
+R0:-0X00000
+R1:-0X000037
+R2:-0X00000B
