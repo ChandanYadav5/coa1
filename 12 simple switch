@@ -1,0 +1,38 @@
+#include <LPC17xx.H>
+#include "lcd.h"
+#define KEY1 (1 << 14)//p1.14
+#define KEY2 (1 << 15)//p1.15
+#define KEY3 (1 << 16)//p1.16
+#define LED (1 << 4) //p0.4
+#define RELAY(1 << 25)//p0.25
+#define BUZZ (1 << 25)//p3.25
+#define KEY_PIN LPC_GPIO1->FIOPIN
+int main (void)
+{
+LPC_GPIO0->FIODIR |= LED; /* LED on PORT0 output */
+LPC_GPIO0->FIOCLR = LED; //LED off
+LPC_GPIO0->FIODIR |= RELAY; /* RELAY on PORT0 output */
+LPC_GPIO0->FIOCLR = RELAY; //RELAY off
+LPC_GPIO3->FIODIR |= BUZZ; /* BUZZER on PORT3 output */
+LPC_GPIO3->FIOCLR = BUZZ; //BUZZER off
+LPC_GPIO1->FIODIR &= ~(KEY1 | KEY2 | KEY3); //keys input
+LPC_GPIO1->FIOSET = (KEY1 | KEY2 | KEY3); //keys pullup
+init_lcd();
+lcd_putstring16(0,"# KEY DEMO #");
+lcd_putstring16(1,"1-LED 2-RLY 3-BZ");
+while(1)
+{
+if (!(KEY_PIN & KEY1))
+LPC_GPIO0->FIOSET = LED;
+else
+LPC_GPIO0->FIOCLR = LED;
+if (!(KEY_PIN & KEY2))
+LPC_GPIO0->FIOSET = RELAY;
+else
+LPC_GPIO0->FIOCLR = RELAY;
+if (!(KEY_PIN & KEY3))
+LPC_GPIO3->FIOSET = BUZZ;
+else
+LPC_GPIO3->FIOCLR = BUZZ;
+}
+}
