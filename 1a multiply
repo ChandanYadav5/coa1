@@ -1,0 +1,15 @@
+AREA MULTIPLY, CODE
+ENTRY 
+EXPORT __main 
+__main
+LDR R1,=2_1111111111111111 ; load the rgister R1
+LDR R2,=2_1111111111111111 ; load the rgister R2
+MUL R3,R1,R2 ; Multiply & store result in R3
+NOP ; No operation
+STOP ; end of execution
+END ; end
+
+output;
+R1:-0X0000FFFF
+R2:-0X0000FFFF
+R3:-0XFFFE0001
