@@ -1,0 +1,36 @@
+SQUARE:-
+#include <LPC17xx.H>
+int main (void)
+{
+uint32_t m;
+LPC_PINCON->PINSEL1 |= (1<<21);
+while(1)
+{
+LPC_DAC->DACR = (voltage/2 << 6);
+for(m = freq; m > 1; m--);
+LPC_DAC->DACR = (voltage << 6);
+for(m = freq; m > 1; m--);
+}
+}
+
+TRIANGLE:-
+#include <LPC17xx.H>
+int main (void)
+{
+uint32_t i = 0;
+uint32_t m;
+LPC_PINCON->PINSEL1 |= (1<<21);
+while(1)
+{
+for(i = 0; i < 1024; i++)
+{
+LPC_DAC->DACR = (i << 6);
+for(m = 10; m > 1; m--);
+}
+for(i = 1024; i > 0; i--)
+{
+LPC_DAC->DACR = (i << 6);
+for(m = 10; m > 1; m--);
+}
+}
+}
